@@ -1,0 +1,106 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="HelpDesk.Master" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <header>
+        <script src="Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+    </header>
+
+
+    <form id="form1" runat="server">
+        <div class="header">
+            <h1>HelpDesk
+            </h1>
+
+            <table class="option">
+                <tr>
+                    <td class="notificacion">
+                        <asp:Panel runat="server" ID="pnlNotificacion" CssClass="contexmenu">
+                            <asp:Label runat="server" ID="lblCount"></asp:Label>
+
+                            <asp:Repeater runat="server" ID="rpNotificaciones">
+                                <HeaderTemplate>
+                                    <ul>
+                                </HeaderTemplate>
+
+                                <ItemTemplate>
+                                    <li>
+                                        <a href="<%# this.EvaluarLink(Eval("tipo_id"),Eval("id"))%>">
+                                            <%# Eval("comentario") %>
+                                        </a>
+
+                                    </li>
+                                </ItemTemplate>
+
+                                <FooterTemplate>
+                                    </ul>
+                                </FooterTemplate>
+                            </asp:Repeater>
+
+
+                        </asp:Panel>
+
+                    </td>
+                    <td class="user">
+                        <asp:Label runat="server" ID="lblUsuario"></asp:Label>
+                    </td>
+
+                    <td class="login">
+                        <asp:LinkButton runat="server" ID="lklIniciar" OnClick="lklIniciar_Click">Iniciar Sesion</asp:LinkButton>
+                        <asp:LinkButton runat="server" ID="lklSalir" OnClick="lklSalir_Click">Salir</asp:LinkButton>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="menu">
+
+            <ul>
+                <li>
+                    <a href="inicio.aspx">Publicaciones</a>
+
+                </li>
+                <li runat="server" id="liCrearPublicacion">
+                    <a href="CrearPublicacion.aspx">Crear Publicacion</a>
+
+                </li>
+                <li runat="server" id="liSolicitudes">
+                    <a href="Solicitudes.aspx">Solicitudes
+                    </a>
+
+                </li>
+
+                <li runat="server" id="liCrearSolicitud">
+                    <a href="CrearSolicitud.aspx">Crear Solicitud
+                    </a>
+
+                </li>
+
+                <li runat="server" id="liInformes">
+                    <a href="Resumen.aspx">Resumen Solicitudes
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+        <div class="contenido">
+            <asp:ContentPlaceHolder ID="Body" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <link href="Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/js.js" type="text/javascript"></script>
+    <script src="Scripts/Chart.js" type="text/javascript"></script>
+</body>
+</html>

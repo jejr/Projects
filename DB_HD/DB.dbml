@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Helpdesk" Class="DBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=Helpdesk;Integrated Security=True" SettingsObjectName="DB_HD.Properties.Settings" SettingsPropertyName="HelpdeskConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.HD_Departamento" Member="HD_Departamentos">
+    <Type Name="HD_Departamento">
+      <Column Name="departamento_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="departamento" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Departamento_HD_Usuario" Member="HD_Usuarios" ThisKey="departamento_id" OtherKey="departamento_id" Type="HD_Usuario" />
+      <Association Name="HD_Departamento_HD_Problema" Member="HD_Problemas" ThisKey="departamento_id" OtherKey="departamento_id" Type="HD_Problema" />
+      <Association Name="HD_Departamento_HD_Solicitud" Member="HD_Solicituds" ThisKey="departamento_id" OtherKey="departamento_id" Type="HD_Solicitud" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Publicacion" Member="HD_Publicacions">
+    <Type Name="HD_Publicacion">
+      <Column Name="publicacion_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="encabezado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="contenido" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="activo" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="usuario_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Publicacion_HD_Publicacion_Comentario" Member="HD_Publicacion_Comentarios" ThisKey="publicacion_id" OtherKey="publicacion_id" Type="HD_Publicacion_Comentario" />
+      <Association Name="HD_Publicacion_HD_Publicacion_Usuario" Member="HD_Publicacion_Usuarios" ThisKey="publicacion_id" OtherKey="publicacion_id" Type="HD_Publicacion_Usuario" />
+      <Association Name="HD_Usuario_HD_Publicacion" Member="HD_Usuario" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Usuarios" Member="HD_Usuarios">
+    <Type Name="HD_Usuario">
+      <Column Name="usuario_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="usuario" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="clave" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="nombres" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="apellidos" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="activo" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="departamento_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Usuario_HD_Publicacion" Member="HD_Publicacions" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Publicacion" />
+      <Association Name="HD_Usuario_HD_Publicacion_Comentario" Member="HD_Publicacion_Comentarios" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Publicacion_Comentario" />
+      <Association Name="HD_Usuario_HD_Usuario_Seguidore" Member="HD_Usuario_" Storage="_HD_Usuario_Seguidores" ThisKey="usuario_id" OtherKey="seguidor_id" Type="HD_Usuario_Seguidore" />
+      <Association Name="HD_Usuario_HD_Usuario_Seguidore1" Member="HD_Usuario_Seguidores" Storage="_HD_Usuario_Seguidores1" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Usuario_Seguidore" />
+      <Association Name="HD_Usuario_HD_Publicacion_Usuario" Member="HD_Publicacion_Usuarios" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Publicacion_Usuario" />
+      <Association Name="HD_Usuario_HD_Usuario_Notificacion" Member="HD_Usuario_Notificacions" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Usuario_Notificacion" />
+      <Association Name="HD_Usuario_HD_Solicitud" Member="HD_Solicituds" ThisKey="usuario_id" OtherKey="usr_asignado_id" Type="HD_Solicitud" />
+      <Association Name="HD_Usuario_HD_Solicitud1" Member="HD_Solicituds1" ThisKey="usuario_id" OtherKey="usr_solicita_id" Type="HD_Solicitud" />
+      <Association Name="HD_Usuario_HD_Solicitud_Comentario" Member="HD_Solicitud_Comentarios" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Solicitud_Comentario" />
+      <Association Name="HD_Departamento_HD_Usuario" Member="HD_Departamento" ThisKey="departamento_id" OtherKey="departamento_id" Type="HD_Departamento" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Publicacion_Comentarios" Member="HD_Publicacion_Comentarios">
+    <Type Name="HD_Publicacion_Comentario">
+      <Column Name="comentario_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="publicacion_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="usuario_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="comentario" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Publicacion_HD_Publicacion_Comentario" Member="HD_Publicacion" ThisKey="publicacion_id" OtherKey="publicacion_id" Type="HD_Publicacion" IsForeignKey="true" />
+      <Association Name="HD_Usuario_HD_Publicacion_Comentario" Member="HD_Usuario" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Usuario_Seguidores" Member="HD_Usuario_Seguidores">
+    <Type Name="HD_Usuario_Seguidore">
+      <Column Name="useg_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="usuario_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="seguidor_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Usuario_HD_Usuario_Seguidore" Member="HD_Usuario_Seguidor" Storage="_HD_Usuario" ThisKey="seguidor_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+      <Association Name="HD_Usuario_HD_Usuario_Seguidore1" Member="HD_Usuario" Storage="_HD_Usuario1" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Publicacion_Usuario" Member="HD_Publicacion_Usuarios">
+    <Type Name="HD_Publicacion_Usuario">
+      <Column Name="puid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="publicacion_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="usuario_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Publicacion_HD_Publicacion_Usuario" Member="HD_Publicacion" ThisKey="publicacion_id" OtherKey="publicacion_id" Type="HD_Publicacion" IsForeignKey="true" />
+      <Association Name="HD_Usuario_HD_Publicacion_Usuario" Member="HD_Usuario" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_TipoNotificacion" Member="HD_TipoNotificacions">
+    <Type Name="HD_TipoNotificacion">
+      <Column Name="tipo_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipo" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Association Name="HD_TipoNotificacion_HD_Usuario_Notificacion" Member="HD_Usuario_Notificacions" ThisKey="tipo_id" OtherKey="tipo_id" Type="HD_Usuario_Notificacion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Usuario_Notificacion" Member="HD_Usuario_Notificacions">
+    <Type Name="HD_Usuario_Notificacion">
+      <Column Name="notId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipo_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="usuario_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="comentario" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="visto" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="HD_TipoNotificacion_HD_Usuario_Notificacion" Member="HD_TipoNotificacion" ThisKey="tipo_id" OtherKey="tipo_id" Type="HD_TipoNotificacion" IsForeignKey="true" />
+      <Association Name="HD_Usuario_HD_Usuario_Notificacion" Member="HD_Usuario" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Estado" Member="HD_Estados">
+    <Type Name="HD_Estado">
+      <Column Name="estado_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="estado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Estado_HD_Solicitud" Member="HD_Solicituds" ThisKey="estado_id" OtherKey="estado_id" Type="HD_Solicitud" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Problema" Member="HD_Problemas">
+    <Type Name="HD_Problema">
+      <Column Name="problema_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="problema" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="departamento_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Problema_HD_Solicitud" Member="HD_Solicituds" ThisKey="problema_id" OtherKey="problema_id" Type="HD_Solicitud" />
+      <Association Name="HD_Departamento_HD_Problema" Member="HD_Departamento" ThisKey="departamento_id" OtherKey="departamento_id" Type="HD_Departamento" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Solicitud" Member="HD_Solicituds">
+    <Type Name="HD_Solicitud">
+      <Column Name="solicitud_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="usr_solicita_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="usr_asignado_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
+      <Column Name="titulo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="problema_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="departamento_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="estado_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Solicitud_HD_Solicitud_Comentario" Member="HD_Solicitud_Comentarios" ThisKey="solicitud_id" OtherKey="solicitud_id" Type="HD_Solicitud_Comentario" />
+      <Association Name="HD_Departamento_HD_Solicitud" Member="HD_Departamento" ThisKey="departamento_id" OtherKey="departamento_id" Type="HD_Departamento" IsForeignKey="true" />
+      <Association Name="HD_Estado_HD_Solicitud" Member="HD_Estado" ThisKey="estado_id" OtherKey="estado_id" Type="HD_Estado" IsForeignKey="true" />
+      <Association Name="HD_Problema_HD_Solicitud" Member="HD_Problema" ThisKey="problema_id" OtherKey="problema_id" Type="HD_Problema" IsForeignKey="true" />
+      <Association Name="HD_Usuario_HD_Solicitud" Member="HD_Usuario_Asignado" Storage="_HD_Usuario" ThisKey="usr_asignado_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+      <Association Name="HD_Usuario_HD_Solicitud1" Member="HD_Usuario_Solicita" Storage="_HD_Usuario1" ThisKey="usr_solicita_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HD_Solicitud_Comentarios" Member="HD_Solicitud_Comentarios">
+    <Type Name="HD_Solicitud_Comentario">
+      <Column Name="comentario_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="comentario" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="solicitud_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="usuario_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="rutaFile" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="HD_Solicitud_HD_Solicitud_Comentario" Member="HD_Solicitud" ThisKey="solicitud_id" OtherKey="solicitud_id" Type="HD_Solicitud" IsForeignKey="true" />
+      <Association Name="HD_Usuario_HD_Solicitud_Comentario" Member="HD_Usuario" ThisKey="usuario_id" OtherKey="usuario_id" Type="HD_Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VW_Resumen" Member="VW_Resumens">
+    <Type Name="VW_Resumen">
+      <Column Name="estado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
